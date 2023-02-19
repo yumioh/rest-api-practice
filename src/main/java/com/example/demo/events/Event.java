@@ -2,12 +2,16 @@ package com.example.demo.events;
 
 import lombok.*;
 
+import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @EqualsAndHashCode(of = "id")
-public class Event {
 
+@Entity
+public class Event {
+    @Id @GeneratedValue
     private Integer id; //식별자
     private String name;
     private String description;
@@ -21,6 +25,7 @@ public class Event {
     private int limitOfEnrollment;
     private boolean offline;
     private boolean free;
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
 }
