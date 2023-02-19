@@ -49,7 +49,7 @@ public class EventControllerTests {
                 .limitOfEnrollment(100)
                 .location("강남역 D2 스타텁 팩토리")
                 .offline(false)
-                .free(true)
+                .free(false)
                 .eventStatus(EventStatus.PUBLISHED)
                 .build();
         //Mockito.when(eventRepository.save(event)).thenReturn(event);
