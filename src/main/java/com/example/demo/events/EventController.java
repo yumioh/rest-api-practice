@@ -41,7 +41,7 @@ public class EventController {
         eventValidator.validate(eventdto,errors);
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().build();
-        }ß
+        }
         Event event = modelMapper.map(eventdto, Event.class);
         Event newEvent = this.eventRepository.save(event);
         URI createUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();
