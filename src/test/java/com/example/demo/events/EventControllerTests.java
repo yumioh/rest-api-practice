@@ -39,7 +39,6 @@ public class EventControllerTests {
     @TestDescription("정상적으로 생성하는 테스트")
     public void createEvent() throws Exception {
         Event event = Event.builder()
-                .id(200)
                 .name("Spring")
                 .description("REST API Development with Spring")
                 .beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 23, 14, 21))
@@ -50,9 +49,6 @@ public class EventControllerTests {
                 .maxPrice(200)
                 .limitOfEnrollment(100)
                 .location("강남역 D2 스타텁 팩토리")
-                .offline(false)
-                .free(false)
-                .eventStatus(EventStatus.BEGAN_ENROLLMENT)
                 .build();
         //Mockito.when(eventRepository.save(event)).thenReturn(event);
 
