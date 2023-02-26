@@ -19,7 +19,7 @@ import java.net.URI;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Controller
-@RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api", produces = MediaTypes.HAL_JSON_UTF8_VALUE)
 public class EventController {
 
     private Logger logger = LoggerFactory.getLogger(EventController.class);
@@ -35,7 +35,7 @@ public class EventController {
 
     }
 
-    @PostMapping
+    @PostMapping("/events")
    public ResponseEntity createEvent(@RequestBody @Valid EventDto eventdto, Errors errors){
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors);
