@@ -1,6 +1,8 @@
 package com.example.demo.events;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -17,8 +19,10 @@ import java.net.URI;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Controller
-@RequestMapping(value = "/api/events/", produces = MediaTypes.HAL_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_UTF8_VALUE)
 public class EventController {
+
+    private Logger logger = LoggerFactory.getLogger(EventController.class);
 
     private final EventRepository eventRepository;
     private final ModelMapper modelMapper;
@@ -28,6 +32,7 @@ public class EventController {
         this.eventRepository= eventRepository;
         this.modelMapper = modelMapper;
         this.eventValidator = eventValidator;
+
     }
 
     @PostMapping
@@ -39,16 +44,18 @@ public class EventController {
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors);
         }
+        //logger.info("~~~~~~"+ eventdto.getLocation());
         Event event = modelMapper.map(eventdto, Event.class);
         event.update();
         Event newEvent = this.eventRepository.save(event);
+
         ControllerLinkBuilder selfLinkBuilder= linkTo(EventController.class).slash(newEvent.getId());
         URI createURI = selfLinkBuilder.toUri();
         //®URI createUri = URI.create("https://dummy");
         EventResource eventResource = new EventResource(event);
+        eventResource.add(linkTo(EventController.class).withRel("query-events"));
         eventResource.add(selfLinkBuilder.withSelfRel());
         eventResource.add(selfLinkBuilder.withRel("update-events"));
-        eventResource.add(linkTo(EventController.class).withRel("query-events"));
         return ResponseEntity.created(createURI).body(eventResource);
    }
 }
