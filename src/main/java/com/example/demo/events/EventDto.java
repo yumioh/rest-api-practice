@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 
 @Builder @NoArgsConstructor @AllArgsConstructor @Data
 public class EventDto {
-    // @NotEmpty
-    //private Integer id; //식별자
     @NotEmpty
     private String name;
     @NotEmpty
